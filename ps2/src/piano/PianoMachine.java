@@ -4,10 +4,12 @@ import javax.sound.midi.MidiUnavailableException;
 
 import midi.Midi;
 import music.Pitch;
+import midi.Instrument;
 
 public class PianoMachine {
 	
 	private Midi midi;
+	private Instrument instrument = Midi.DEFAULT_INSTRUMENT;
     
 	/**
 	 * constructor for PianoMachine.
@@ -24,22 +26,31 @@ public class PianoMachine {
         }
     }
     
-    //TODO write method spec
+    /**
+	 * Begins to play a note if a note is not playing already on the current instrument.
+	 * @param rawPitch: Pitch of the Note to be played.
+	 */
     public void beginNote(Pitch rawPitch) {
-    	midi.beginNote(new Pitch(0).toMidiFrequency());
-    	//TODO implement for question 1
+    	midi.beginNote(rawPitch.toMidiFrequency(), instrument);
+    }
+    
+    /**
+   	 * Stops stops playing a note appropriate note if it's playing upon the release
+   	 * corresponding key.
+   	 * @param rawPitch: Pitch of the Note being played.
+   	 */
+    public void endNote(Pitch rawPitch) {
+    	
+    	midi.endNote(rawPitch.toMidiFrequency(),instrument);
 
     }
     
-    //TODO write method spec
-    public void endNote(Pitch rawPitch) {
-    	midi.endNote(new Pitch(0).toMidiFrequency());
-    	//TODO implement for question 1
-    }
-    
-    //TODO write method spec
+    /**
+   	 * Switch the current instrument playing by cycling throw a list of Mid instruments.
+   	 * 'i' key is used to cycle. 
+   	 */
     public void changeInstrument() {
-       	//TODO: implement for question 2
+       	instrument = instrument.next();
     }
     
     //TODO write method spec
